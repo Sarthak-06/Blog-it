@@ -12,7 +12,7 @@ const About: FC = () => {
             <div className={'about'}>
                 <h1>About</h1>
                 <div className={'aboutInfo'}>
-                    <p>Hello, I'm Vadim 👋. I'm junior front-end developer 👨‍💻 from Ukraine.</p>
+                    <p>Hello All, We are team of three members and we have build the HandsOn blogging App .</p>
                     <p>This is my full-stack blog application built in React⚛️ and NestJS🦄.</p>
                     <div className={'aboutFeatures'}>
                         <div className={'aboutFeaturesLeft'}>
@@ -38,11 +38,11 @@ const About: FC = () => {
                     <div className={'aboutSocials'}>
                         <div className={'aboutSocialsItem'}>
                             <MailOutlineIcon className={'socialIcon'}/>
-                            <span className={'socialItemSpan'}>turokvadim2510@gmail.com</span>
+                            <span className={'socialItemSpan'}>sarthaksingh0608@gmail.com</span>
                         </div>
                         <div className={'aboutSocialsItem'}>
                             <GitHubIcon className={'socialIcon'}/>
-                            <span><a target="_blank" rel="noreferrer" className={'socialItemLink'} href={'https://github.com/vadimturok'}>@vadimturok</a></span>
+                            <span><a target="_blank" rel="noreferrer" className={'socialItemLink'} href={'https://github.com/Sarthak-06'}>@Sarthak-06</a></span>
                         </div>
                     </div>
                 </div>

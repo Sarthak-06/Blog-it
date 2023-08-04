@@ -26,7 +26,7 @@ const Navbar: FC = () => {
       <Drawer anchor={'right'} open={activeMenu} onClose={() => setActiveMenu(false)}>
         <Box sx={{width: 300, padding: '20px', textAlign: 'center'}}>
           <div className={'mobileMenu'}>
-            <h2 style={{paddingBottom: '20px'}}>MyBlog - Navigation</h2>
+            <h2 style={{paddingBottom: '20px'}}>HandsOn - Navigation</h2>
             <Divider/>
             <div style={{display: 'flex', flexDirection: 'column', gap: '30px', marginTop: '20px'}}>
               <Link onClick={() => setActiveMenu(false)} className={'link'} to={'/'}>
@@ -63,7 +63,7 @@ const Navbar: FC = () => {
         <div className={"left"}>
           <NewspaperIcon className={"icon"} />
           <Link to={"/"} className={"link"}>
-            <h1 className={"title"}>MyBlog</h1>
+            <h1 className={"title"}>HandsOn</h1>
           </Link>
         </div>
         <div className={"right"}>
@@ -72,7 +72,7 @@ const Navbar: FC = () => {
             <div className={'burgerMenuItem'}/>
             <div className={'burgerMenuItem'}/>
           </div>
-          <div className={"gitHubIcon"}>
+          {/* <div className={"gitHubIcon"}>
             <GitHubButton
               href={"https://github.com/vadimturok/my-blog"}
               data-icon={"octicon-star"}
@@ -85,7 +85,7 @@ const Navbar: FC = () => {
               data-size={"large"}
               data-text={"Follow @vadimturok"}
             />
-          </div>
+          </div> */}
 
           {isAuth ? (
             <button onClick={handleLogout} className={"signupButton"}>

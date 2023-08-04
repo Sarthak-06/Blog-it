@@ -21,7 +21,7 @@ const AppRoutes: FC = () => {
   return (
     <Routes>
       <Route path={"/"}>
-        <Route index element={<Home />} />
+        <Route index element={<Home />} />-
         <Route path={"login"} element={<Login />} />
         <Route path={"register"} element={<Register />} />
         <Route path={"posts/:postId"} element={<Post />} />

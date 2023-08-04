@@ -1,95 +1,116 @@
-import React, {FC, useEffect, useState} from 'react';
-import './editProfileForm.scss'
-import Button from "../common/button/Button";
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import UserService from "../../services/user-service";
-import {setUser} from "../../store/reducers/auth/authSlice";
+import React, { FC } from 'react';
+import './editProfileForm.scss';
+import Button from '../common/button/Button';
+import { TextField } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import UserService from '../../services/user-service';
+import { setUser } from '../../store/reducers/auth/authSlice';
 
-interface EditProfileFormProps{
-    file: File | null;
-    setFile: any;
+interface EditProfileFormProps {
+  file: File | null;
+  setFile: any;
 }
 
-const EditProfileForm: FC<EditProfileFormProps> = ({file, setFile}) => {
-    const dispatch = useAppDispatch()
-    const {user} = useAppSelector(state => state.auth)
-    const [userInfo, setUserInfo] = useState({firstName: '', lastName: '', email: ''})
-    const [message, setMessage] = useState('')
+interface EditProfileFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
 
-    useEffect(() => {
-        setFile(null)
-        if(Object.keys(user).length > 0){
-            setUserInfo({...user})
-        }
-    }, [user, setFile])
+const EditProfileForm: FC<EditProfileFormProps> = ({ file, setFile }) => {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<EditProfileFormData>();
+  const [message, setMessage] = React.useState('');
 
-    const onSubmit = (e: any) => {
-        e.preventDefault()
-        setMessage('')
-        if(user.firstName === userInfo.firstName &&
-            user.lastName === userInfo.lastName &&
-            user.email === userInfo.email && !file
-        ){
-            setMessage('Please edit fields!')
-        }else{
-            UserService.updateUser(user.id, userInfo.firstName, userInfo.lastName, userInfo.email ,file)
-                .then(response => {
-                    dispatch(setUser(response.data))
-                    setMessage('Changes saved!')
-                })
-                .catch(error => setMessage(error.message))
-        }
+  React.useEffect(() => {
+    setFile(null);
+  }, [setFile]);
+
+  const onSubmit = (data: EditProfileFormData) => {
+    setMessage('');
+    const { firstName, lastName, email } = data;
+    if (
+      user.firstName === firstName &&
+      user.lastName === lastName &&
+      user.email === email &&
+      !file
+    ) {
+      setMessage('Please make changes to the fields!');
+    } else {
+      UserService.updateUser(user.id, firstName, lastName, email, file)
+        .then((response) => {
+          dispatch(setUser(response.data));
+          setMessage('Changes saved!');
+        })
+        .catch((error) => setMessage(error.message));
     }
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUserInfo({...userInfo, [e.target.name]: e.target.value})
-    }
-    return (
-        <form className={'editProfileForm'}>
-            <label className="field field_v2">
-                <input
-                    name={'firstName'}
-                    value={userInfo.firstName}
-                    onChange={onChange}
-                    className="field__input"
-                />
-                <span className="field__label-wrap">
-                    <span className="field__label">First name</span>
-                </span>
-            </label>
-            <label className="field field_v2">
-                <input
-                    name={'lastName'}
-                    value={userInfo.lastName}
-                    onChange={onChange}
-                    className="field__input"
-                />
-                <span className="field__label-wrap">
-                    <span className="field__label">Last name</span>
-                </span>
-            </label>
-            <label className="field field_v2">
-                <input
-                    name={'email'}
-                    value={userInfo.email}
-                    onChange={onChange}
-                    className="field__input"
-                />
-                <span className="field__label-wrap">
-                    <span className="field__label">Email</span>
-                </span>
-            </label>
-            <div className={'submitProfileChanges'}>
-                <div className={'profileSaveBtn'}>
-                    <Button handleClick={onSubmit} type={'submit'}  text={'Save'}/>
-                </div>
-                {message &&
-                    <span className={message === 'Changes saved!' ? 'submitSuccess' : 'submitError'}>
-                        {message}
-                    </span>
-                }
-            </div>
-        </form>
-    );
+  };
+
+  return (
+    <form className={'editProfileForm'} onSubmit={handleSubmit(onSubmit)}>
+      <TextField
+        label="First Name"
+        variant="outlined"
+        fullWidth
+        {...register('firstName', {
+          required: 'First name is required',
+          pattern: {
+            value: /^[A-Za-z]+$/i,
+            message: 'Name should contain only letters',
+          },
+        })}
+        error={!!errors.firstName}
+        helperText={errors?.firstName?.message}
+      />
+
+      <TextField
+        label="Last Name"
+        variant="outlined"
+        fullWidth
+        {...register('lastName', {
+          required: 'Last name is required',
+          pattern: {
+            value: /^[A-Za-z]+$/i,
+            message: 'Name should contain only letters',
+          },
+        })}
+        error={!!errors.lastName}
+        helperText={errors?.lastName?.message}
+      />
+
+      <TextField
+        label="Email"
+        variant="outlined"
+        fullWidth
+        {...register('email', {
+          required: 'Email is required',
+          pattern: {
+            value: /^\S+@\S+$/i,
+            message: 'Invalid email format',
+          },
+        })}
+        error={!!errors.email}
+        helperText={errors?.email?.message}
+      />
+
+      <div className={'submitProfileChanges'}>
+        <div className={'profileSaveBtn'}>
+          <Button type={'submit'} text={'Save'} />
+        </div>
+        {message && (
+          <span className={message === 'Changes saved!' ? 'submitSuccess' : 'submitError'}>
+            {message}
+          </span>
+        )}
+      </div>
+    </form>
+  );
 };
 
 export default EditProfileForm;

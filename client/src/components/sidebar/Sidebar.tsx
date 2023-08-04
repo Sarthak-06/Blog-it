@@ -47,10 +47,10 @@ const Sidebar: FC<{homePage: boolean}> = ({homePage}) => {
             <LocalFireDepartmentIcon className={"sidebarIcon"} />
             <span>Hot</span>
           </li>
-          <li className={postsType === 'best' ? 'sidebarItem' : ''} onClick={() => handleSelectPosts('best')}>
+          {/* <li className={postsType === 'best' ? 'sidebarItem' : ''} onClick={() => handleSelectPosts('best')}>
             <StarIcon className={"sidebarIcon"} />
             <span>Best</span>
-          </li>
+          </li> */}
         </ul>
       </div>}
       <div className={"menu bottom"}>

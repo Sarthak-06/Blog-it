@@ -41,12 +41,12 @@ var core_1 = require("@nestjs/core");
 var app_module_1 = require("./app.module");
 var cookieParser = require("cookie-parser");
 var firebaseAdmin = require("firebase-admin");
-var serviceAccount = require("../blog-app-ff2df-firebase-adminsdk-t2e0z-e43ec34b89.json");
+var serviceAccount = require("../blog-app-ff2df-firebase-adminsdk-t2e0z-5e8254bf77.json");
 exports.admin = firebaseAdmin.initializeApp({
     // @ts-ignore
     credential: firebaseAdmin.credential.cert(serviceAccount)
 });
-exports.storageRef = exports.admin.storage().bucket('gs://post-images-storage.appspot.com');
+exports.storageRef = exports.admin.storage().bucket('gs://blog_app');
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function () {
         var PORT, app;
